@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoAsset AI — Templates for Real Estate Investors</title>
+  <style>
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #1341a8;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    
+    /* Header */
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 24px;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    nav a:hover { color: var(--primary); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 64px 0 48px;
+      background: linear-gradient(135deg, #eff6ff 0%, #fefce8 100%);
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat .num { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    .hero-stat .label { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Section */
+    section { padding: 64px 0; }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    }
+    .product-card .badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .product-card .badge.best-value {
+      background: var(--success);
+    }
+    .product-card .emoji-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    .product-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .product-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .product-card .price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .product-card .price .original {
+      font-size: 1rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 8px;
+    }
+    .product-card .interval {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .product-card .savings {
+      font-size: 0.85rem;
+      color: var(--success);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-outline:hover { background: #eff6ff; }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-buy {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .feature-card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .feature-card h4 { margin-bottom: 8px; }
+    .feature-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Affiliate */
+    .affiliate-section {
+      background: #1e293b;
+      color: white;
+      text-align: center;
+      padding: 64px 0;
+    }
+    .affiliate-section h2 { margin-bottom: 16px; }
+    .affiliate-section p { color: #94a3b8; max-width: 500px; margin: 0 auto 32px; }
+    .affiliate-section .btn {
+      max-width: 300px;
+      margin: 0 auto;
+      background: var(--accent);
+      color: #1e293b;
+      display: inline-block;
+      width: auto;
+      padding: 12px 32px;
+    }
+    .affiliate-section .btn:hover { background: #d97706; }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      text-align: center;
+      padding: 32px 0;
+      font-size: 0.85rem;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { gap: 24px; }
+      nav a { margin-left: 16px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">AutoAsset <span>AI</span></a>
+      <nav>
+        <a href="#products">Products</a>
+        <a href="#features">Features</a>
+        <a href="#affiliate">Affiliates</a>
+        <a href="/admin/dashboard">📊</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Stop Paperwork.<br/>Start <span>Investing.</span></h1>
+      <p>Professional-grade templates, checklists, and toolkits for landlords, property managers, and real estate investors. Instant download. Zero hassle.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">100+</div>
+          <div class="label">Templates</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">5,000+</div>
+          <div class="label">Customers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">99%</div>
+          <div class="label">Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products">
+    <div class="container">
+      <h2 class="section-title">Choose Your Toolkit</h2>
+      <p class="section-subtitle">Everything is instant download. No waiting, no shipping, no fuss.</p>
+      <div class="products-grid" id="productsGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" style="background: white;">
+    <div class="container">
+      <h2 class="section-title">Why AutoAsset AI?</h2>
+      <p class="section-subtitle">Built by investors, for investors. Every template saves you hours.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">⚡</div>
+          <h4>Instant Delivery</h4>
+          <p>Download immediately after purchase. No waiting, no delays.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">✏️</div>
+          <h4>Fully Customizable</h4>
+          <p>Every template includes editable formats (DOCX, XLSX, PDF).</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📚</div>
+          <h4>Growing Library</h4>
+          <p>New templates added monthly. Members get every update free.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛡️</div>
+          <h4>Pro-Grade Quality</h4>
+          <p>Drafted by property pros. Used by 5,000+ landlords nationwide.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">💳</div>
+          <h4>Secure Checkout</h4>
+          <p>Payments processed by Stripe. Your data is safe and encrypted.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔄</div>
+          <h4>30-Day Returns</h4>
+          <p>Not satisfied? Full refund within 30 days. No questions asked.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Affiliate -->
+  <section id="affiliate" class="affiliate-section">
+    <div class="container">
+      <h2>Earn 20% Commission</h2>
+      <p>Share your unique referral link with other landlords and investors. Earn 20% on every sale — including recurring subscription commissions.</p>
+      <button class="btn" onclick="openAffiliateModal()">Become an Affiliate</button>
+    </div>
+  </section>
+
+  <!-- Affiliate Modal -->
+  <div id="affiliateModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; display:none; align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:12px; padding:32px; max-width:400px; width:90%; position:relative;">
+      <button onclick="closeAffiliateModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer;">×</button>
+      <h3 style="margin-bottom:16px;">Join Our Affiliate Program</h3>
+      <form id="affiliateForm">
+        <input type="text" id="affName" placeholder="Your name" required style="width:100%;padding:10px;margin-bottom:12px;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;" />
+        <input type="email" id="affEmail" placeholder="Your email" required style="width:100%;padding:10px;margin-bottom:12px;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;" />
+        <input type="text" id="affWebsite" placeholder="Website (optional)" style="width:100%;padding:10px;margin-bottom:16px;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;" />
+        <button type="submit" class="btn btn-primary">Get My Referral Link</button>
+      </form>
+      <div id="affiliateResult" style="display:none;margin-top:16px;padding:16px;background:#f0fdf4;border-radius:8px;">
+        <p style="color:var(--success);font-weight:600;margin-bottom:8px;">✅ You're in!</p>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Your referral link:</p>
+        <code id="affiliateLink" style="word-break:break-all;font-size:0.85rem;"></code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 AutoAsset AI. All rights reserved. | <a href="#" style="color:#64748b;">Privacy Policy</a> | <a href="#" style="color:#64748b;">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const API_BASE = '';
+
+    // Load products
+    async function loadProducts() {
+      try {
+        const res = await fetch(`${API_BASE}/api/products`);
+        const data = await res.json();
+        renderProducts(data.products);
+      } catch (err) {
+        console.error('Failed to load products:', err);
+        document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:var(--text-muted);">Unable to load products. Is the server running?</p>';
+      }
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = products.map(p => {
+        const emojis = {
+          'template': '📄',
+          'bundle': '📦',
+          'subscription': '🎫',
+        };
+        const emoji = emojis[p.category] || '📁';
+        const badge = p.popular ? '<span class="badge">🔥 Popular</span>' : '';
+        const savings = p.savings ? `<div class="savings">Save ${p.savings} vs monthly</div>` : '';
+        const originalPrice = p.originalPrice ? `<span class="original">$${p.originalPrice.toFixed(2)}</span>` : '';
+        const interval = p.interval ? `<div class="interval">per ${p.interval}</div>` : '';
+
+        return `
+          <div class="product-card">
+            ${badge}
+            <div class="emoji-icon">${emoji}</div>
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+            <div class="price">$${p.price.toFixed(2)}${originalPrice}</div>
+            ${interval}
+            ${savings}
+            <button class="btn btn-primary btn-buy" onclick="buyProduct('${p.id}')">
+              ${p.category === 'subscription' ? `Subscribe — $${p.price.toFixed(2)}/${p.interval}` : `Buy Now — $${p.price.toFixed(2)}`}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Buy product
+    async function buyProduct(productId) {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      try {
+        // Check for affiliate code in URL
+        const params = new URLSearchParams(window.location.search);
+        const affiliateCode = params.get('ref') || '';
+
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId, quantity: 1, affiliateCode }),
+        });
+
+        const data = await res.json();
+        
+        if (data.session && data.session.url) {
+          // In production: window.location.href = data.session.url (Stripe redirect)
+          // For prototype: go to simulated success page
+          window.location.href = data.session.url;
+        } else {
+          throw new Error('Failed to create checkout session');
+        }
+      } catch (err) {
+        console.error(err);
+        btn.disabled = false;
+        btn.textContent = 'Try Again';
+        showToast('Something went wrong. Please try again.');
+      }
+    }
+
+    // Affiliate modal
+    function openAffiliateModal() {
+      const modal = document.getElementById('affiliateModal');
+      modal.style.display = 'flex';
+      document.getElementById('affiliateResult').style.display = 'none';
+      document.getElementById('affiliateForm').style.display = 'block';
+    }
+
+    function closeAffiliateModal() {
+      document.getElementById('affiliateModal').style.display = 'none';
+    }
+
+    document.getElementById('affiliateForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = 'Registering...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/affiliates/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('affName').value,
+            email: document.getElementById('affEmail').value,
+            website: document.getElementById('affWebsite').value,
+          }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('affiliateForm').style.display = 'none';
+          document.getElementById('affiliateLink').textContent = data.affiliate.referralLink;
+          document.getElementById('affiliateResult').style.display = 'block';
+        }
+      } catch (err) {
+        showToast('Registration failed. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Get My Referral Link';
+      }
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('affiliateModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeAffiliateModal();
+    });
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Init
+    loadProducts();
+  </script>
+</body>
+</html>
