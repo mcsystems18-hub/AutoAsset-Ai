@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoAsset AI | Professional Real Estate Templates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- Header -->
+    <header class="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="assets/logo.png" alt="Logo" class="h-8 w-auto">
+                <span class="text-lg font-bold">AutoAsset AI</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-semibold text-gray-500">
+                <a href="index.html" class="text-gray-900">Home</a>
+                <a href="categories/landlord.html" class="hover:text-gray-900">Landlord</a>
+                <a href="categories/investor.html" class="hover:text-gray-900">Investor</a>
+                <a href="categories/homeowner.html" class="hover:text-gray-900">Homeowner</a>
+                <a href="membership.html" class="hover:text-gray-900">Membership</a>
+                <a href="/admin/dashboard" class="hover:text-gray-900">📊 Admin</a>
+            </nav>
+            <div>
+                <a href="#products" class="bg-black text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-gray-800 transition inline-block">Browse All</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">Stop Paperwork. <span class="text-blue-600">Start Investing.</span></h1>
+            <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">Professional-grade templates, checklists, and toolkits for landlords and investors. Instant download. Zero hassle.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#products" class="bg-black text-white px-10 py-4 rounded-2xl font-bold hover:bg-gray-800 transition">Get Started</a>
+                <a href="membership.html" class="bg-white border border-gray-200 text-gray-900 px-10 py-4 rounded-2xl font-bold hover:bg-gray-50 transition">Join Membership</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Choose Your Toolkit</h2>
+                <p class="text-gray-500">Everything is instant download. No waiting, no shipping, no fuss.</p>
+            </div>
+            
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Filled by JS -->
+                <div class="col-span-full text-center py-20">
+                    <p class="text-gray-400">Loading amazing tools...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16">Why AutoAsset AI?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h4 class="font-bold mb-2">Instant Delivery</h4>
+                    <p class="text-gray-500 text-sm">Download immediately after purchase. No waiting, no delays.</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-4">✏️</div>
+                    <h4 class="font-bold mb-2">Fully Customizable</h4>
+                    <p class="text-gray-500 text-sm">Every template includes editable formats (DOCX, XLSX, PDF).</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h4 class="font-bold mb-2">Pro-Grade Quality</h4>
+                    <p class="text-gray-500 text-sm">Drafted by property pros. Used by 5,000+ landlords nationwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliate -->
+    <section id="affiliate" class="py-24 bg-slate-900 text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-6">Earn 20% Commission</h2>
+            <p class="text-slate-400 max-w-xl mx-auto mb-10">Share your unique referral link with other landlords and investors. Earn 20% on every sale — including recurring subscription commissions.</p>
+            <button onclick="openAffiliateModal()" class="bg-amber-500 text-slate-900 px-8 py-3 rounded-xl font-bold hover:bg-amber-400 transition">Become an Affiliate</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-100 mt-24">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <img src="assets/logo.png" class="h-6 opacity-30">
+                <span class="text-gray-300 font-bold">AutoAsset AI</span>
+            </div>
+            <p class="text-gray-400">© 2025 AutoAsset AI. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-gray-400 hover:text-gray-600">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Affiliate Modal -->
+    <div id="affiliateModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[1000]">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 relative">
+            <button onclick="closeAffiliateModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-900">&times;</button>
+            <h3 class="text-2xl font-bold mb-6">Join Our Affiliate Program</h3>
+            <form id="affiliateForm" class="space-y-4">
+                <input type="text" id="affName" placeholder="Your name" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none">
+                <input type="email" id="affEmail" placeholder="Your email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none">
+                <input type="text" id="affWebsite" placeholder="Website (optional)" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none">
+                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">Get My Referral Link</button>
+            </form>
+            <div id="affiliateResult" class="hidden mt-6 p-6 bg-green-50 rounded-2xl">
+                <p class="text-green-600 font-bold mb-2">✅ You're in!</p>
+                <p class="text-sm text-gray-500 mb-2">Your referral link:</p>
+                <code id="affiliateLink" class="block w-full p-2 bg-white border border-green-100 rounded text-xs break-all"></code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const API_BASE = '';
+
+        // Load products
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_BASE}/api/products`);
+                const data = await res.json();
+                renderProducts(data.products);
+            } catch (err) {
+                console.error('Failed to load products:', err);
+                document.getElementById('productsGrid').innerHTML = '<p class="col-span-full text-center text-gray-400">Unable to load products. Is the server running?</p>';
+            }
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            const images = {
+                'prod_lease_pack': 'assets/lease-template-cover.png',
+                'prod_master_toolkit': 'assets/investor-toolkit-cover.png',
+                'prod_landlord_kit': 'assets/landlord-kit-cover.png',
+                'prod_library_monthly': 'assets/logo.png',
+                'prod_library_annual': 'assets/logo.png',
+                // Fallbacks
+                'template': 'assets/inspection-checklist-cover.png',
+                'bundle': 'assets/investor-toolkit-cover.png'
+            };
+
+            grid.innerHTML = products.map(p => {
+                const imageUrl = images[p.id] || images[p.category] || 'assets/logo.png';
+                const originalPrice = p.originalPrice ? `<span class="text-sm text-gray-400 line-through ml-2">$${p.originalPrice.toFixed(2)}</span>` : '';
+                const interval = p.interval ? `<span class="text-sm text-gray-400">/${p.interval}</span>` : '';
+                const badge = p.popular ? `<span class="absolute top-4 right-4 bg-amber-400 text-xs font-bold px-2 py-1 rounded-full shadow-sm">🔥 Popular</span>` : '';
+
+                return `
+                    <div class="group relative flex flex-col">
+                        <div class="aspect-square bg-gray-100 rounded-3xl overflow-hidden mb-6 border border-gray-100 group-hover:shadow-2xl transition duration-500 relative">
+                            <img src="${imageUrl}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            ${badge}
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">${p.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4 flex-grow">${p.description}</p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="flex items-baseline">
+                                <span class="text-2xl font-extrabold">$${p.price.toFixed(2)}</span>
+                                ${originalPrice}
+                                ${interval}
+                            </div>
+                            <button onclick="buyProduct('${p.id}')" class="bg-white border border-gray-200 px-4 py-2 rounded-xl text-sm font-bold hover:bg-gray-50 transition shadow-sm">
+                                ${p.category === 'subscription' ? 'Join' : 'Buy Now'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Buy product
+        async function buyProduct(productId) {
+            const btn = event.currentTarget;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const affiliateCode = params.get('ref') || '';
+
+                const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId, quantity: 1, affiliateCode }),
+                });
+
+                const data = await res.json();
+                
+                if (data.session && data.session.url) {
+                    window.location.href = data.session.url;
+                } else {
+                    throw new Error('Failed to create checkout session');
+                }
+            } catch (err) {
+                console.error(err);
+                btn.disabled = false;
+                btn.textContent = originalText;
+                showToast('Something went wrong. Please try again.');
+            }
+        }
+
+        // Affiliate modal
+        function openAffiliateModal() {
+            const modal = document.getElementById('affiliateModal');
+            modal.style.display = 'flex';
+            document.getElementById('affiliateResult').classList.add('hidden');
+            document.getElementById('affiliateForm').classList.remove('hidden');
+        }
+
+        function closeAffiliateModal() {
+            document.getElementById('affiliateModal').style.display = 'none';
+        }
+
+        document.getElementById('affiliateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = 'Registering...';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/affiliates/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('affName').value,
+                        email: document.getElementById('affEmail').value,
+                        website: document.getElementById('affWebsite').value,
+                    }),
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('affiliateForm').classList.add('hidden');
+                    document.getElementById('affiliateLink').textContent = data.affiliate.referralLink;
+                    document.getElementById('affiliateResult').classList.remove('hidden');
+                }
+            } catch (err) {
+                showToast('Registration failed. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Get My Referral Link';
+            }
+        });
+
+        // Close modal on backdrop click
+        document.getElementById('affiliateModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeAffiliateModal();
+        });
+
+        // Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Init
+        loadProducts();
+    </script>
+</body>
+</html>
