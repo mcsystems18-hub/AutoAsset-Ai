@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoAsset AI — Admin Dashboard</title>
+  <style>
+    :root {
+      --primary: #1a56db;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --radius: 10px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-weight: 800; font-size: 1.2rem; }
+    .logo span { color: var(--primary); }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--success);
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .last-updated {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .kpi-card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .kpi-card .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .kpi-card .sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .kpi-card .trend-up { color: var(--success); }
+    .kpi-card .trend-down { color: var(--danger); }
+
+    /* Row */
+    .row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Live Feed */
+    .feed {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .feed::-webkit-scrollbar { width: 6px; }
+    .feed::-webkit-scrollbar-track { background: transparent; }
+    .feed::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    
+    .feed-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-item .icon { font-size: 1rem; }
+    .feed-item .detail { flex: 1; }
+    .feed-item .detail strong { color: white; }
+    .feed-item .time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Products Table */
+    .top-products {
+      list-style: none;
+    }
+    .top-products li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .top-products li:last-child { border-bottom: none; }
+    .top-products .rank {
+      color: var(--primary);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .top-products .sales {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    /* Email stats */
+    .email-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .email-stat {
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .email-stat .count {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .email-stat .label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: capitalize;
+    }
+
+    @media (max-width: 768px) {
+      .row { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      body { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">AutoAsset <span>AI</span> · Admin</div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span class="status"><span class="status-dot"></span> System Online</span>
+        <span class="last-updated" id="lastUpdated">Updating...</span>
+      </div>
+    </header>
+
+    <!-- KPI Summary -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card">
+        <div class="label">Today's Revenue</div>
+        <div class="value trend-up" id="todayRevenue">$0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Total Revenue</div>
+        <div class="value" id="totalRevenue">$0</div>
+        <div class="sub" id="totalSales">0 sales</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Avg Order Value</div>
+        <div class="value" id="aov">$0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Active Subscriptions</div>
+        <div class="value" id="activeSubs">0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Affiliates</div>
+        <div class="value" id="totalAffiliates">0</div>
+        <div class="sub" id="pendingCommissions">$0 pending</div>
+      </div>
+      <div class="kpi-card">
+        <div class="label">Emails Sent</div>
+        <div class="value" id="totalEmails">0</div>
+      </div>
+    </div>
+
+    <!-- Row: Feed + Top Products -->
+    <div class="row">
+      <div class="card">
+        <h3>📡 Live Activity Feed</h3>
+        <div class="feed" id="feed">
+          <div style="color:var(--text-muted);font-size:0.85rem;">Waiting for data...</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🏆 Top Products (30 days)</h3>
+        <ul class="top-products" id="topProducts">
+          <li style="color:var(--text-muted);font-size:0.85rem;">No sales data yet</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row: Email Stats -->
+    <div class="row" style="grid-template-columns: 1fr 1fr;">
+      <div class="card">
+        <h3>📧 Email Sequences</h3>
+        <div class="email-grid" id="emailGrid">
+          <div style="color:var(--text-muted);font-size:0.85rem;">Loading...</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>💰 Affiliate Commissions</h3>
+        <div id="affiliateStats">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.9rem;">
+            <span>Pending Payout</span>
+            <span style="color:var(--warning);font-weight:600;" id="pendingAmount">$0</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.9rem;">
+            <span>Paid Out</span>
+            <span style="color:var(--success);font-weight:600;" id="paidAmount">$0</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.9rem;">
+            <span>Total Commissions</span>
+            <span style="font-weight:600;" id="totalCommissions">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '';
+
+    function formatTime(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    function formatCurrency(amount) {
+      return '$' + Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    async function loadDashboard() {
+      try {
+        const res = await fetch(`${API_BASE}/api/analytics/dashboard`);
+        const data = await res.json();
+
+        // KPI cards
+        document.getElementById('todayRevenue').textContent = formatCurrency(data.summary.todayRevenue);
+        document.getElementById('totalRevenue').textContent = formatCurrency(data.summary.totalRevenue);
+        document.getElementById('totalSales').textContent = data.summary.totalSales + ' sales';
+        document.getElementById('aov').textContent = formatCurrency(data.summary.avgOrderValue);
+        document.getElementById('activeSubs').textContent = data.summary.activeSubscriptions;
+        document.getElementById('totalAffiliates').textContent = data.summary.totalAffiliates;
+        document.getElementById('pendingCommissions').textContent = formatCurrency(data.summary.pendingCommissions) + ' pending';
+        document.getElementById('totalEmails').textContent = data.emailStats.totalSent;
+
+        // Live feed
+        const feed = document.getElementById('feed');
+        if (data.recentPurchases && data.recentPurchases.length > 0) {
+          feed.innerHTML = data.recentPurchases.map(p => {
+            const emoji = p.product.includes('Member') ? '🎫' : '🟢';
+            return `
+              <div class="feed-item">
+                <span class="icon">${emoji}</span>
+                <div class="detail">
+                  <strong>${p.product}</strong> — ${formatCurrency(p.amount)}
+                  <div style="color:var(--text-muted);font-size:0.8rem;">${p.email}${p.affiliateRef ? ` · ref: ${p.affiliateRef}` : ''}</div>
+                </div>
+                <div class="time">${formatTime(p.time)}</div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          feed.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;">No purchases yet. Run a test checkout!</div>';
+        }
+
+        // Top products
+        const topProducts = document.getElementById('topProducts');
+        if (data.topProducts && data.topProducts.length > 0) {
+          topProducts.innerHTML = data.topProducts.map((p, i) => `
+            <li>
+              <span><span class="rank">#${i + 1}</span>${p.name}</span>
+              <span class="sales">${p.sales} sold</span>
+            </li>
+          `).join('');
+        }
+
+        // Email stats
+        const emailGrid = document.getElementById('emailGrid');
+        if (data.emailStats && data.emailStats.byType) {
+          const emailTypes = {
+            'purchase_confirmation': '📥 Confirmation',
+            'welcome_24h': '👋 Welcome',
+            'upsell_72h': '💰 Upsell',
+            'renewal_success': '✅ Renewal',
+            'payment_failed': '⚠️ Payment Fail',
+            'abandoned_cart': '🛒 Abandoned',
+            'subscription_welcome': '🎫 Sub Welcome',
+            'cancellation': '👋 Cancellation',
+          };
+          emailGrid.innerHTML = Object.entries(emailTypes).map(([key, label]) => `
+            <div class="email-stat">
+              <div class="count">${data.emailStats.byType[key] || 0}</div>
+              <div class="label">${label}</div>
+            </div>
+          `).join('');
+        }
+
+        // Affiliate stats
+        if (data.affiliateStats) {
+          document.getElementById('pendingAmount').textContent = formatCurrency(data.affiliateStats.pendingAmount);
+          document.getElementById('paidAmount').textContent = formatCurrency(data.affiliateStats.paidAmount);
+          document.getElementById('totalCommissions').textContent = data.affiliateStats.totalCommissions;
+        }
+
+        // Timestamp
+        document.getElementById('lastUpdated').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+        document.getElementById('feed').innerHTML = '<div style="color:var(--danger);font-size:0.85rem;">⚠️ Unable to connect. Is the server running?</div>';
+      }
+    }
+
+    // Refresh every 10 seconds
+    loadDashboard();
+    setInterval(loadDashboard, 10000);
+  </script>
+</body>
+</html>

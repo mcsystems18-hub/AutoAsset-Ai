@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Purchase Confirmed — AutoAsset AI</title>
+  <style>
+    :root {
+      --primary: #1a56db;
+      --success: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 560px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .checkmark {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #d1fae5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2rem;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); margin-bottom: 32px; }
+    .order-info {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .order-info p {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .order-info p:last-child { border-bottom: none; }
+    .order-info .label { color: var(--text-muted); }
+    .order-info .value { font-weight: 600; }
+
+    .download-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin-bottom: 16px;
+    }
+    .download-btn:hover { background: #1341a8; }
+    .download-btn.loading { opacity: 0.7; pointer-events: none; }
+
+    .email-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .email-note strong { color: var(--text); }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .actions a {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .actions a:hover {
+      background: #f1f5f9;
+      color: var(--text);
+    }
+
+    .files-list {
+      text-align: left;
+      margin: 20px 0;
+      padding: 16px;
+      background: #f0fdf4;
+      border-radius: 8px;
+    }
+    .files-list h4 { margin-bottom: 12px; color: var(--success); }
+    .files-list ul { list-style: none; }
+    .files-list li {
+      padding: 6px 0;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .files-list .size { color: var(--text-muted); font-size: 0.8rem; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="checkmark">✅</div>
+    <h1>Payment Successful!</h1>
+    <p class="subtitle">Your digital products are ready for instant download.</p>
+
+    <div class="order-info" id="orderInfo">
+      <p><span class="label">Product</span><span class="value" id="productName">Loading...</span></p>
+      <p><span class="label">Amount</span><span class="value" id="productPrice">Loading...</span></p>
+      <p><span class="label">Order ID</span><span class="value" id="orderId">Loading...</span></p>
+    </div>
+
+    <div class="files-list hidden" id="filesList">
+      <h4>📁 Your Files</h4>
+      <ul id="fileItems"></ul>
+    </div>
+
+    <button class="download-btn" id="downloadBtn" onclick="downloadFiles()">
+      ⬇️ Download Now
+    </button>
+
+    <p class="email-note">
+      We've also sent your download link to <strong id="customerEmail">your email</strong>.
+      Check your inbox for <strong>"Your downloads are ready"</strong>.
+    </p>
+
+    <div class="actions">
+      <a href="/">Continue Browsing</a>
+      <a href="#" onclick="showAffiliateNotice()">Refer a Friend → Earn 20%</a>
+    </div>
+
+    <div id="affiliateNotice" class="hidden" style="margin-top: 20px; padding: 16px; background: #fefce8; border-radius: 8px; text-align: left;">
+      <p style="font-weight: 600; margin-bottom: 8px;">🔗 Your Affiliate Link</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Share this link and earn 20% commission on every sale:</p>
+      <code id="affiliateLink" style="word-break: break-all; font-size: 0.85rem; display: block; padding: 8px; background: #f8fafc; border-radius: 4px;"></code>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id') || 'unknown';
+    const productId = params.get('product_id') || 'prod_lease_pack';
+    const ref = params.get('ref') || '';
+
+    // Product data
+    const products = {
+      'prod_lease_pack': { name: 'Landlord Lease Agreement Pack', price: '$14.99' },
+      'prod_master_toolkit': { name: 'Property Management Master Toolkit', price: '$49.00' },
+      'prod_landlord_kit': { name: 'Landlord Starter Kit (Bundle)', price: '$79.00' },
+      'prod_library_monthly': { name: 'Template Library Membership (Monthly)', price: '$19.00' },
+      'prod_library_annual': { name: 'Template Library Membership (Annual)', price: '$149.00' },
+    };
+
+    const product = products[productId] || products['prod_lease_pack'];
+    document.getElementById('productName').textContent = product.name;
+    document.getElementById('productPrice').textContent = product.price;
+    document.getElementById('orderId').textContent = sessionId;
+    document.getElementById('customerEmail').textContent = 'customer@example.com';
+
+    // Affiliate link
+    if (ref) {
+      document.getElementById('affiliateLink').textContent = `${window.location.origin}/?ref=${ref}`;
+    }
+
+    // Simulate download
+    async function downloadFiles() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = '⏳ Preparing your download...';
+      btn.classList.add('loading');
+
+      try {
+        const res = await fetch(`/api/download/${sessionId}_demo_token`);
+        const data = await res.json();
+        
+        if (data.success) {
+          btn.textContent = '✅ Downloaded Successfully!';
+          
+          const filesList = document.getElementById('filesList');
+          filesList.classList.remove('hidden');
+          
+          const fileItems = document.getElementById('fileItems');
+          fileItems.innerHTML = data.files.map(f => 
+            `<li><span>📄 ${f.name}</span><span class="size">${f.size}</span></li>`
+          ).join('');
+        } else {
+          btn.textContent = '⬇️ Download Your Files';
+          alert('Download link expired. Check your email for a new one.');
+        }
+      } catch (err) {
+        btn.textContent = '⬇️ Download Now';
+        alert('Download not available in demo mode. Files would be served in production.');
+      }
+
+      btn.classList.remove('loading');
+    }
+
+    function showAffiliateNotice() {
+      const notice = document.getElementById('affiliateNotice');
+      notice.classList.toggle('hidden');
+      if (!ref && !notice.classList.contains('hidden')) {
+        // Generate a demo affiliate code
+        const demoCode = 'USER' + Math.random().toString(36).substring(2, 6).toUpperCase();
+        document.getElementById('affiliateLink').textContent = `${window.location.origin}/?ref=${demoCode}`;
+      }
+    }
+  </script>
+</body>
+</html>
