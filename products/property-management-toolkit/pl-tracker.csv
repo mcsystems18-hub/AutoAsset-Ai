@@ -1,0 +1,4 @@
+Month,Revenue,Expenses,Net Profit,Notes
+January,5000.00,2200.00,"=B2-C2",
+February,5000.00,1800.00,"=B3-C3",
+March,5200.00,2500.00,"=B4-C4",
