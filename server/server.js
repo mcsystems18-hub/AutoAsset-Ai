@@ -115,9 +115,12 @@ function logEmail(to, subject, type) {
 
 function getProductById(productId) {
   const products = {
-    'prod_lease_pack': { name: 'Landlord Lease Agreement Pack', price: 14.99, category: 'template' },
-    'prod_master_toolkit': { name: 'Property Management Master Toolkit', price: 49.00, category: 'bundle' },
-    'prod_landlord_kit': { name: 'Landlord Starter Kit (Bundle)', price: 79.00, category: 'bundle' },
+    'prod_lease_agreement': { name: 'Residential Lease Agreement', price: 29.00, category: 'template' },
+    'prod_deal_analyzer': { name: 'Real Estate Deal Analyzer', price: 39.00, category: 'template' },
+    'prod_inspection_checklist': { name: 'Move-In/Move-Out Checklist', price: 19.00, category: 'template' },
+    'prod_landlord_kit': { name: 'Landlord Starter Pack', price: 79.00, category: 'bundle' },
+    'prod_investor_toolkit': { name: 'Investor Property Toolkit', price: 99.00, category: 'bundle' },
+    'prod_home_binder': { name: 'Home Maintenance Binder', price: 49.00, category: 'bundle' },
     'prod_library_monthly': { name: 'Template Library Membership (Monthly)', price: 19.00, category: 'subscription' },
     'prod_library_annual': { name: 'Template Library Membership (Annual)', price: 149.00, category: 'subscription' },
   };
@@ -133,33 +136,55 @@ app.get('/api/products', (req, res) => {
   res.json({
     products: [
       {
-        id: 'prod_lease_pack',
-        name: 'Landlord Lease Agreement Pack',
-        description: 'Professional lease agreements — ready to customize for any state. Includes move-in/move-out checklists.',
-        price: 14.99,
-        currency: 'USD',
-        category: 'template',
-        image: '/img/product-lease.jpg',
-      },
-      {
-        id: 'prod_master_toolkit',
-        name: 'Property Management Master Toolkit',
-        description: 'Everything a landlord needs: inspection forms, maintenance logs, tenant communications, rent rolls, and more.',
-        price: 49.00,
-        currency: 'USD',
-        category: 'bundle',
-        image: '/img/product-toolkit.jpg',
-        popular: true,
-      },
-      {
         id: 'prod_landlord_kit',
-        name: 'Landlord Starter Kit (Bundle)',
-        description: 'All 5 essential packs bundled at a massive discount. Perfect for new landlords.',
+        name: 'Landlord Starter Pack',
+        description: 'Professional lease agreements, tenant screening, and inspection checklists for new landlords.',
         price: 79.00,
         currency: 'USD',
         originalPrice: 124.95,
         category: 'bundle',
-        image: '/img/product-starter.jpg',
+        popular: true,
+      },
+      {
+        id: 'prod_investor_toolkit',
+        name: 'Investor Property Toolkit',
+        description: 'Advanced P&L trackers, portfolio dashboards, and deal-analysis calculators.',
+        price: 99.00,
+        currency: 'USD',
+        originalPrice: 149.00,
+        category: 'bundle',
+      },
+      {
+        id: 'prod_home_binder',
+        name: 'Home Maintenance Binder',
+        description: 'Seasonal checklists, home inventory logs, and utility trackers for homeowners.',
+        price: 49.00,
+        currency: 'USD',
+        category: 'bundle',
+      },
+      {
+        id: 'prod_lease_agreement',
+        name: 'Residential Lease Agreement',
+        description: 'Fully customizable residential lease agreement template for any state.',
+        price: 29.00,
+        currency: 'USD',
+        category: 'template',
+      },
+      {
+        id: 'prod_deal_analyzer',
+        name: 'Real Estate Deal Analyzer',
+        description: 'Powerful spreadsheet to analyze potential rental property investments.',
+        price: 39.00,
+        currency: 'USD',
+        category: 'template',
+      },
+      {
+        id: 'prod_inspection_checklist',
+        name: 'Move-In/Move-Out Checklist',
+        description: 'Comprehensive property inspection form to protect your security deposits.',
+        price: 19.00,
+        currency: 'USD',
+        category: 'template',
       },
       {
         id: 'prod_library_monthly',
@@ -169,7 +194,6 @@ app.get('/api/products', (req, res) => {
         currency: 'USD',
         interval: 'month',
         category: 'subscription',
-        image: '/img/product-membership.jpg',
       },
       {
         id: 'prod_library_annual',
@@ -179,7 +203,6 @@ app.get('/api/products', (req, res) => {
         currency: 'USD',
         interval: 'year',
         category: 'subscription',
-        image: '/img/product-membership.jpg',
         savings: '$79',
       },
     ],
@@ -413,27 +436,25 @@ app.get('/api/download/:token', (req, res) => {
 
 function getProductFiles(productId) {
   const files = {
-    'prod_lease_pack': [
+    'prod_lease_agreement': [
       { name: 'Standard_Lease_Agreement.docx', size: '245 KB' },
-      { name: 'Month_to_Month_Lease.docx', size: '212 KB' },
       { name: 'Move_In_Checklist.pdf', size: '89 KB' },
-      { name: 'Move_Out_Checklist.pdf', size: '92 KB' },
-      { name: 'Rent_Increase_Notice.docx', size: '45 KB' },
     ],
-    'prod_master_toolkit': [
-      { name: 'Master_Lease_Agreement.docx', size: '312 KB' },
-      { name: 'Property_Inspection_Form.pdf', size: '156 KB' },
-      { name: 'Maintenance_Log.xlsx', size: '89 KB' },
-      { name: 'Tenant_Screening_Checklist.pdf', size: '67 KB' },
-      { name: 'Rent_Roll_Tracker.xlsx', size: '45 KB' },
-      { name: 'Tenant_Communication_Templates.docx', size: '123 KB' },
+    'prod_deal_analyzer': [
+      { name: 'Rental_Deal_Analyzer.xlsx', size: '156 KB' },
     ],
     'prod_landlord_kit': [
       { name: 'Lease_Agreement_Pack.docx', size: '450 KB' },
       { name: 'Property_Management_Forms.pdf', size: '320 KB' },
       { name: 'Financial_Tracker.xlsx', size: '180 KB' },
-      { name: 'Tenant_Forms_Pack.docx', size: '280 KB' },
-      { name: 'Maintenance_Checklists.pdf', size: '150 KB' },
+    ],
+    'prod_investor_toolkit': [
+      { name: 'Portfolio_Dashboard.xlsx', size: '210 KB' },
+      { name: 'Cashflow_Calculator.xlsx', size: '145 KB' },
+    ],
+    'prod_home_binder': [
+      { name: 'Home_Maintenance_Checklist.pdf', size: '95 KB' },
+      { name: 'Home_Inventory_Log.xlsx', size: '112 KB' },
     ],
   };
   return files[productId] || [{ name: 'Product_Package.zip', size: '1.2 MB' }];
