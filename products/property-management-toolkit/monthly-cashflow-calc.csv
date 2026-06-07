@@ -1,0 +1,8 @@
+Income Item,Amount,Expense Item,Amount
+Gross Rent,2000.00,Mortgage,1100.00
+Laundry/Other,50.00,Insurance,100.00
+,,Taxes,200.00
+,,Repairs (10%),200.00
+,,Vacancy (5%),100.00
+Total Income,"=SUM(B2:B3)",Total Expenses,"=SUM(D2:D6)"
+,,Net Cash Flow,"=B7-D7"
